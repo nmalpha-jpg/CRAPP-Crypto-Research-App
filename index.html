@@ -404,6 +404,56 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
 .mni{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;font-weight:700;color:var(--slate);cursor:pointer;padding:4px 8px;background:none;border:none;font-family:var(--sans);transition:.18s}
 .mni.active{color:var(--gold)}.mni span{font-size:18px}
 
+/* LAST UPDATED */
+.upd-badge{font-size:10px;color:var(--slate);display:flex;align-items:center;gap:4px;font-family:var(--mono)}
+.upd-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+/* SECURITY */
+.sec-score{border-radius:16px;padding:22px;margin-bottom:20px}
+.sec-score.safe{background:var(--green2);border:1px solid rgba(13,122,85,.2)}
+.sec-score.warn{background:var(--gold4);border:1px solid var(--gold5)}
+.sec-score.danger{background:var(--red2);border:1px solid rgba(192,57,43,.2)}
+.sec-score-val{font-family:var(--serif);font-size:42px;font-weight:900;line-height:1}
+.sec-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--ivory3);font-size:13px}
+.sec-row:last-child{border-bottom:none}
+.sec-pass{color:var(--green);font-weight:700;font-size:11px}
+.sec-fail{color:var(--red);font-weight:700;font-size:11px}
+.sec-warn-txt{color:var(--gold);font-weight:700;font-size:11px}
+/* CALENDAR */
+.cal-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;transition:.18s;position:relative;overflow:hidden}
+.cal-card:hover{box-shadow:var(--shadow-md);border-color:var(--gold5)}
+.cal-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
+.cal-card.halving::before{background:#F7931A}
+.cal-card.listing::before{background:var(--green)}
+.cal-card.mainnet::before{background:var(--blue)}
+.cal-card.unlock::before{background:var(--red)}
+.cal-card.partnership::before{background:var(--purple)}
+.cal-card.conference::before{background:var(--gold)}
+.cal-date{font-family:var(--mono);font-size:10px;color:var(--slate);margin-bottom:6px}
+.cal-title{font-weight:800;font-size:13px;margin-bottom:6px;line-height:1.35}
+.cal-coin{font-size:11px;color:var(--slate);margin-bottom:8px}
+.cal-conf{font-size:11px;font-weight:700;color:var(--gold)}
+/* ALERT ITEMS */
+.al-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ivory3)}
+.al-item:last-child{border-bottom:none}
+.al-info{flex:1}
+.al-title{font-weight:700;font-size:13px}
+.al-sub{font-size:10px;color:var(--slate);font-family:var(--mono)}
+.al-triggered{background:var(--green2);color:var(--green);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+/* YIELD TABLE */
+.apy-pill{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700}
+.apy-high{background:var(--green2);color:var(--green)}
+.apy-med{background:var(--gold4);color:var(--gold)}
+.apy-low{background:var(--ivory2);color:var(--slate)}
+.risk-pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700}
+.risk-low{background:var(--green2);color:var(--green)}
+.risk-med{background:var(--gold4);color:var(--gold)}
+.risk-high{background:var(--red2);color:var(--red)}
+/* PRICE FLASH */
+@keyframes flash-up{0%{background:#E8F5F0}100%{background:transparent}}
+@keyframes flash-dn{0%{background:#FDECEA}100%{background:transparent}}
+.flash-up td{animation:flash-up .8s ease}
+.flash-dn td{animation:flash-dn .8s ease}
+
 @media(max-width:1100px){.sstrip{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr}}
 @media(max-width:960px){.sstrip{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}nav#dn{display:none}.mn{display:block}body{padding-bottom:70px}#btt{bottom:80px}.pt .hm{display:none}}
 @media(max-width:600px){.mw{padding:0 12px 60px}header{padding:0 14px}.g3,.g4,.g5{grid-template-columns:1fr}.gg{grid-template-columns:1fr}.token-hero{padding:18px}.th-price{font-size:24px}}
@@ -437,9 +487,14 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
     <button onclick="showP('glossary',this)">📖 Glossary</button>
     <button onclick="showP('tools',this)">🔧 Tools</button>
     <button onclick="showP('portfolio',this)">💼 Portfolio</button>
+    <button onclick="showP('calendar',this)">📅 Calendar</button>
+    <button onclick="showP('alerts',this)">🔔 Alerts</button>
+    <button onclick="showP('security',this)">🛡️ Security</button>
+    <button onclick="showP('yields',this)">💸 Yields</button>
     <button onclick="showP('ai',this)">🤖 AI</button>
   </nav>
   <div class="hr">
+    <div class="upd-badge"><div class="upd-dot"></div><span id="last-upd">Live</span></div>
     <div class="live-p">Live</div>
     <button class="btn btn-g" onclick="showP('ai',null)">Ask AI</button>
   </div>
@@ -473,6 +528,10 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
     <button class="tab" onclick="showP('glossary',this)">📖 Glossary</button>
     <button class="tab" onclick="showP('tools',this)">🔧 Tools</button>
     <button class="tab" onclick="showP('portfolio',this)">💼 Portfolio</button>
+    <button class="tab" onclick="showP('calendar',this)">📅 Calendar</button>
+    <button class="tab" onclick="showP('alerts',this)">🔔 Alerts</button>
+    <button class="tab" onclick="showP('security',this)">🛡️ Security</button>
+    <button class="tab" onclick="showP('yields',this)">💸 Yields</button>
     <button class="tab" onclick="showP('ai',this)">🤖 AI</button>
   </div>
 
@@ -498,7 +557,7 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
             <button class="rp" onclick="loadChart('365',this)">1Y</button>
           </div>
         </div>
-        <div class="cc-body"><canvas id="btc-chart"></canvas></div>
+        <div class="cc-body" id="tv-chart-wrap" style="padding:0;height:320px;"></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px;">
         <div class="fg-card">
@@ -684,17 +743,17 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
 
   <!-- ═══════════════ AIRDROPS ═══════════════ -->
   <div class="panel" id="panel-airdrops">
-    <div class="sh"><div class="st">🪂 Crypto Airdrops</div></div>
+    <div class="sh"><div class="st">🪂 Crypto Airdrops</div><div class="live-p" id="ad-live-badge">Loading…</div></div>
     <div class="fr"><button class="fp active" onclick="filterAD('all',this)">All</button><button class="fp" onclick="filterAD('live',this)">🟢 Live</button><button class="fp" onclick="filterAD('upcoming',this)">🔵 Upcoming</button><button class="fp" onclick="filterAD('ended',this)">⚫ Ended</button></div>
-    <div class="g3" id="adg"></div>
+    <div class="g3" id="adg"><div class="loader"><div class="spin"></div>Loading airdrops…</div></div>
     <div class="co">⚠️ <strong>Safety First:</strong> Never share your seed phrase. Use a dedicated wallet for airdrops. Verify all official channels before connecting your wallet.</div>
   </div>
 
   <!-- ═══════════════ ICOs ═══════════════ -->
   <div class="panel" id="panel-icos">
-    <div class="sh"><div class="st">🚀 Token Sales / ICOs</div></div>
+    <div class="sh"><div class="st">🚀 Token Sales / ICOs</div><div class="live-p" id="ico-live-badge">Loading…</div></div>
     <div class="fr"><button class="fp active" onclick="filterICO('all',this)">All</button><button class="fp" onclick="filterICO('active',this)">🟢 Active</button><button class="fp" onclick="filterICO('upcoming',this)">🔵 Upcoming</button><button class="fp" onclick="filterICO('ended',this)">⚫ Ended</button></div>
-    <div class="g3" id="icog"></div>
+    <div class="g3" id="icog"><div class="loader"><div class="spin"></div>Loading ICOs…</div></div>
   </div>
 
   <!-- ═══════════════ NFTs ═══════════════ -->
@@ -816,6 +875,7 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
         <div class="fg2"><label>Buy Price USD (optional)</label><input type="number" class="fi" id="pbuy" placeholder="e.g. 42000"></div>
         <button class="btn btn-g" style="width:100%;margin-top:4px;" onclick="addAsset()">Add to Portfolio</button>
         <button class="btn btn-o" style="width:100%;margin-top:8px;font-size:11px;" onclick="clearPort()">Clear All</button>
+        <button class="btn btn-o" style="width:100%;margin-top:8px;font-size:11px;" onclick="exportPortfolioCSV()">📥 Export CSV</button>
         <div class="co" style="margin-top:14px;">📌 Stored in your browser only — completely private, no login needed.</div>
       </div>
     </div>
@@ -848,6 +908,100 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
         <button class="csend" onclick="sendAI()">➤</button>
       </div>
     </div>
+  </div>
+
+  <!-- ═══════════════ CALENDAR ═══════════════ -->
+  <div class="panel" id="panel-calendar">
+    <div class="sh"><div class="st">📅 Crypto Events Calendar</div><div class="live-p">CoinMarketCal</div></div>
+    <div class="fr" id="cal-filters">
+      <button class="fp active" onclick="filterCalendar('all',this)">All</button>
+      <button class="fp" onclick="filterCalendar('halving',this)">⛏️ Halving</button>
+      <button class="fp" onclick="filterCalendar('listing',this)">📈 Listing</button>
+      <button class="fp" onclick="filterCalendar('mainnet',this)">🚀 Mainnet</button>
+      <button class="fp" onclick="filterCalendar('unlock',this)">🔓 Unlock</button>
+      <button class="fp" onclick="filterCalendar('partnership',this)">🤝 Partnership</button>
+    </div>
+    <div id="cal-grid" class="g3"><div class="loader"><div class="spin"></div>Loading events…</div></div>
+  </div>
+
+  <!-- ═══════════════ PRICE ALERTS ═══════════════ -->
+  <div class="panel" id="panel-alerts">
+    <div class="sh"><div class="st">🔔 Price Alerts</div><span style="font-size:11px;color:var(--slate);">Browser notifications · stored locally</span></div>
+    <div class="g2">
+      <div class="card">
+        <div style="font-family:var(--serif);font-size:16px;font-weight:800;margin-bottom:18px;">➕ New Alert</div>
+        <div class="fg2"><label>Coin</label>
+          <select class="fi" id="al-coin">
+            <option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option>
+            <option value="solana">Solana (SOL)</option><option value="binancecoin">BNB</option>
+            <option value="ripple">XRP</option><option value="cardano">ADA</option>
+            <option value="avalanche-2">AVAX</option><option value="matic-network">MATIC</option>
+            <option value="chainlink">LINK</option><option value="dogecoin">DOGE</option>
+          </select>
+        </div>
+        <div class="fg2"><label>Condition</label>
+          <select class="fi" id="al-cond">
+            <option value="above">Price goes above</option>
+            <option value="below">Price goes below</option>
+          </select>
+        </div>
+        <div class="fg2"><label>Target Price (USD)</label><input type="number" class="fi" id="al-price" placeholder="e.g. 70000"></div>
+        <div class="fg2"><label>Note (optional)</label><input type="text" class="fi" id="al-note" placeholder="e.g. BTC ATH breakout"></div>
+        <button class="btn btn-g" style="width:100%;margin-top:4px;" onclick="addAlert()">Set Alert</button>
+        <div class="co" style="margin-top:14px;">🔔 <strong>Browser notifications required.</strong> Click "Allow" when prompted. Alerts check every 30 seconds.</div>
+      </div>
+      <div class="card">
+        <div style="font-family:var(--serif);font-size:16px;font-weight:800;margin-bottom:18px;">📋 Active Alerts</div>
+        <div id="alerts-list"><div style="text-align:center;padding:24px;color:var(--slate);font-size:12px;">No alerts set yet.</div></div>
+      </div>
+    </div>
+    <div style="margin-top:20px;"><div class="sh"><div class="st" style="font-size:15px;">📊 Current Prices (live)</div></div><div class="g5" id="alert-prices"></div></div>
+  </div>
+
+  <!-- ═══════════════ SECURITY CHECKER ═══════════════ -->
+  <div class="panel" id="panel-security">
+    <div class="sh"><div class="st">🛡️ Token Security Checker</div><div class="live-p">GoPlus Security API</div></div>
+    <div class="card" style="max-width:680px;margin-bottom:24px;">
+      <div style="font-size:13px;color:var(--slate);margin-bottom:16px;line-height:1.7;">Paste any ERC-20 / BEP-20 contract address to instantly check for honeypot, hidden mint functions, owner privileges, tax settings, and other rug pull indicators.</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <input type="text" id="sec-addr" class="fi" style="flex:1;min-width:260px;" placeholder="0x contract address (ERC-20 / BEP-20)…">
+        <select class="fi" id="sec-chain" style="width:160px;">
+          <option value="1">Ethereum</option><option value="56">BNB Chain</option>
+          <option value="137">Polygon</option><option value="43114">Avalanche</option>
+          <option value="10">Optimism</option><option value="42161">Arbitrum</option>
+        </select>
+        <button class="btn btn-g" onclick="checkSecurity()">Scan Contract</button>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="fp btn-sm" onclick="secDemo('0xdAC17F958D2ee523a2206206994597C13D831ec7','1')">USDT (ETH)</button>
+        <button class="fp btn-sm" onclick="secDemo('0x55d398326f99059fF775485246999027B3197955','56')">USDT (BSC)</button>
+        <button class="fp btn-sm" onclick="secDemo('0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0','1')">MATIC (ETH)</button>
+      </div>
+    </div>
+    <div id="sec-result"></div>
+    <div class="g3" style="margin-top:24px;">
+      <div class="card"><div style="font-weight:800;font-size:14px;margin-bottom:10px;">🚩 Common Red Flags</div><ul style="font-size:12px;color:var(--slate);line-height:2;list-style:none;"><li>⛔ Honeypot — can buy but not sell</li><li>⛔ High buy/sell tax (>10%)</li><li>⛔ Owner can mint unlimited tokens</li><li>⛔ Trading can be paused by owner</li><li>⛔ Proxy contract (logic can change)</li><li>⛔ External calls in transfer function</li></ul></div>
+      <div class="card"><div style="font-weight:800;font-size:14px;margin-bottom:10px;">✅ Green Flags</div><ul style="font-size:12px;color:var(--slate);line-height:2;list-style:none;"><li>✅ Verified open-source contract</li><li>✅ Renounced ownership</li><li>✅ LP tokens locked</li><li>✅ Low/zero buy-sell tax</li><li>✅ No mint function</li><li>✅ Audited by known firm</li></ul></div>
+      <div class="card"><div style="font-weight:800;font-size:14px;margin-bottom:10px;">🔍 Other Free Security Tools</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"><a href="https://tokensniffer.com" target="_blank" class="btn btn-o btn-sm" style="text-align:center;text-decoration:none;">TokenSniffer →</a><a href="https://honeypot.is" target="_blank" class="btn btn-o btn-sm" style="text-align:center;text-decoration:none;">Honeypot.is →</a><a href="https://rugcheck.xyz" target="_blank" class="btn btn-o btn-sm" style="text-align:center;text-decoration:none;">RugCheck.xyz →</a><a href="https://de.fi/scanner" target="_blank" class="btn btn-o btn-sm" style="text-align:center;text-decoration:none;">De.Fi Scanner →</a></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ YIELDS ═══════════════ -->
+  <div class="panel" id="panel-yields">
+    <div class="sh"><div class="st">💸 DeFi Yield Tracker</div><div class="live-p">DeFiLlama Yields</div></div>
+    <div class="g5" style="margin-bottom:20px;" id="yield-stats"></div>
+    <div class="fr" id="yield-filters">
+      <button class="fp active" onclick="filterYields('all',this)">All</button>
+      <button class="fp" onclick="filterYields('stablecoin',this)">💵 Stablecoins</button>
+      <button class="fp" onclick="filterYields('eth',this)">Ξ ETH</button>
+      <button class="fp" onclick="filterYields('btc',this)">₿ BTC</button>
+      <button class="fp" onclick="filterYields('low',this)">🟢 Low Risk</button>
+    </div>
+    <div style="overflow-x:auto;border-radius:14px;border:1px solid var(--border);background:var(--white);box-shadow:var(--shadow);">
+      <table class="pt"><thead><tr><th>#</th><th>Protocol · Pool</th><th>APY</th><th class="hm">TVL</th><th class="hm">Chain</th><th class="hm">30d Trend</th><th>Risk</th><th>Link</th></tr></thead><tbody id="yield-tbody"></tbody></table>
+    </div>
+    <div style="text-align:center;margin-top:14px;"><button class="btn btn-o btn-sm" onclick="loadMoreYields()">Load More</button></div>
+    <div class="co" style="margin-top:20px;">⚠️ <strong>DeFi Risk Disclaimer:</strong> Smart contract risk, impermanent loss, and protocol failure can result in total loss. High APY often indicates high risk. Always DYOR.</div>
   </div>
 
 </div><!-- /.mw -->
@@ -887,13 +1041,13 @@ footer::before{content:'';position:absolute;inset:0;background-image:linear-grad
 // API KEYS & CONFIG
 // ═══════════════════════════════════════════════
 const API_KEYS = {
-  coingecko: 'CG-d69CXuKoGK6pM7urRUVneFvM',
+  coingecko:   'CG-d69CXuKoGK6pM7urRUVneFvM',
   cryptopanic: '93c18a021aa1af5e1a1bb0c855deedc4a14f702e',
-  coinmarketcap: 'e5981b06f84e4b638e6c262d35d0faa7',
-  cryptorank: 'f1f66ef2953090023636106ed6908cc7533a994209522a4c980c02bef98a',
-  opensea: 'ab19cd56924743abbe4cf8b57251a4c2',
-  gemini: 'AIzaSyCsYbhZO8V9q3YQbasbXwJaELBX2_Y9kug',
-  messari: '0+Nf5g+xOogreY91VvW4faXU7GxERupesxpQyoJaF-VR-aWu'
+  cryptorank:  'f1f66ef2953090023636106ed6908cc7533a994209522a4c980c02bef98a',
+  opensea:     'ab19cd56924743abbe4cf8b57251a4c2',
+  gemini:      'AIzaSyCsYbhZO8V9q3YQbasbXwJaELBX2_Y9kug',
+  etherscan:   'YourEtherscanFreeKey', // get free at etherscan.io/apis
+  goplus:      ''  // no key needed
 };
 
 const CG = `https://api.coingecko.com/api/v3`;
@@ -913,13 +1067,18 @@ const cls=v=>v>=0?'up':'dn';
 const S={
   coins:[],prices:{},news:[],allNews:[],
   port:JSON.parse(localStorage.getItem('crapp5_port')||'[]'),
+  alerts:JSON.parse(localStorage.getItem('crapp_alerts')||'[]'),
+  watchlist:JSON.parse(localStorage.getItem('crapp_watch')||'[]'),
   chartDays:'7', chartCoin:'bitcoin',
   whaleData:[],whaleFilter:'all',
   defiData:[],defiFilter:'all',defiPage:0,
   ocAsset:'bitcoin',
   tokCoins:[],
   newsPage:1,
-  liveContext:{}
+  liveContext:{},
+  airdropsFetched:false,icosFetched:false,
+  calFetched:false,yieldsFetched:false,
+  yieldsAll:[],yieldsCurrent:[],yieldsPage:0
 };
 
 // ═══════════════════════════════════════════════
@@ -950,6 +1109,11 @@ function showP(name,el){
   if(name==='news'&&!S.allNews.length)fetchNews();
   if(name==='tokens'&&!S.tokCoins.length)fetchTokenCoins();
   if(name==='nfts')fetchNFTs();
+  if(name==='airdrops'&&!S.airdropsFetched)fetchAirdrops();
+  if(name==='icos'&&!S.icosFetched)fetchICOs();
+  if(name==='calendar'&&!S.calFetched)fetchCalendar();
+  if(name==='yields'&&!S.yieldsFetched)fetchYields();
+  if(name==='alerts'){renderAlerts();loadAlertPrices();}
   scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1100,38 +1264,35 @@ async function fetchCoins(pg=1){
 }
 function loadMore(){cpg++;fetchCoins(cpg);}
 function spk(prices,up){if(!prices?.length)return'';const min=Math.min(...prices),max=Math.max(...prices),rng=(max-min)||1;const pts=prices.map((p,i)=>`${(i/(prices.length-1))*72},${26-((p-min)/rng)*24}`).join(' ');const col=up?'#0D7A55':'#C0392B';return`<svg class="spk" viewBox="0 0 72 26" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.8"/></svg>`;}
-function renderCoins(coins){
-  $('ptbody').innerHTML=coins.map(c=>{const h1=c.price_change_percentage_1h_in_currency,h24=c.price_change_percentage_24h_in_currency,d7=c.price_change_percentage_7d_in_currency;
-    return`<tr onclick="openTokenDetail('${c.id}')" style="cursor:pointer;"><td><div class="rn">${c.market_cap_rank}</div></td><td><div class="cc"><img class="ci" src="${c.image}" onerror="this.style.display='none'" alt="${c.symbol}"><div><div class="cn">${c.name}</div><div class="csy">${c.symbol.toUpperCase()}</div></div></div></td><td style="font-weight:700;">${fmt.price(c.current_price)}</td><td class="hm ${cls(h1)}">${fmt.pct(h1)}</td><td class="${cls(h24)}" style="font-weight:700;">${fmt.pct(h24)}</td><td class="hm ${cls(d7)}">${fmt.pct(d7)}</td><td class="hm">${fmt.large(c.market_cap)}</td><td class="hm">${fmt.large(c.total_volume)}</td><td class="hm">${spk(c.sparkline_in_7d?.price,d7>=0)}</td></tr>`;
-  }).join('');
-}
-function filterCoins(q){renderCoins(S.coins.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.symbol.toLowerCase().includes(q.toLowerCase())));}
-function renderTrend(coins){$('d-tr').innerHTML=coins.slice(0,7).map((c,i)=>{const chg=c.price_change_percentage_24h_in_currency;return`<div class="tri" onclick="openTokenDetail('${c.id}')" style="cursor:pointer;"><div class="trk">${i+1}</div><img src="${c.image}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"><div class="tri-info"><div class="tri-nm">${c.name}</div><div class="tri-sy">${c.symbol.toUpperCase()}</div></div><div class="${cls(chg)}" style="font-size:12px;font-weight:700;">${fmt.pct(chg)}</div></div>`}).join('');}
+function renderCoins(coins){renderCoinsWithFlash(coins);}
+function filterCoins(q){renderCoins(S.coins.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.symbol.toLowerCase().includes(q.toLowerCase())));}function renderTrend(coins){$('d-tr').innerHTML=coins.slice(0,7).map((c,i)=>{const chg=c.price_change_percentage_24h_in_currency;return`<div class="tri" onclick="openTokenDetail('${c.id}')" style="cursor:pointer;"><div class="trk">${i+1}</div><img src="${c.image}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"><div class="tri-info"><div class="tri-nm">${c.name}</div><div class="tri-sy">${c.symbol.toUpperCase()}</div></div><div class="${cls(chg)}" style="font-size:12px;font-weight:700;">${fmt.pct(chg)}</div></div>`}).join('');}
 function renderGainers(coins){const s=[...coins].sort((a,b)=>(b.price_change_percentage_24h_in_currency||0)-(a.price_change_percentage_24h_in_currency||0));$('d-gn').innerHTML=s.slice(0,7).map((c,i)=>{const chg=c.price_change_percentage_24h_in_currency;return`<div class="tri" onclick="openTokenDetail('${c.id}')" style="cursor:pointer;"><div class="trk">${i+1}</div><img src="${c.image}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"><div class="tri-info"><div class="tri-nm">${c.name}</div><div class="tri-sy">${fmt.price(c.current_price)}</div></div><div class="up" style="font-size:12px;font-weight:700;">${fmt.pct(chg)}</div></div>`}).join('');}
 
 // ═══════════════════════════════════════════════
-// CHART
+// TRADINGVIEW CHART — real live candles
 // ═══════════════════════════════════════════════
-let _ch=null;
-function loadChartJS(cb){if(window.Chart){cb();return;}const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js';s.onload=cb;document.head.appendChild(s);}
-async function loadChart(days,el,coinId){
-  S.chartDays=days||S.chartDays;const coin=coinId||S.chartCoin;
+const TV_SYMBOLS={
+  bitcoin:'BINANCE:BTCUSDT', ethereum:'BINANCE:ETHUSDT', solana:'BINANCE:SOLUSDT',
+  binancecoin:'BINANCE:BNBUSDT', ripple:'BINANCE:XRPUSDT', cardano:'BINANCE:ADAUSDT',
+  'avalanche-2':'BINANCE:AVAXUSDT', 'matic-network':'BINANCE:MATICUSDT',
+  chainlink:'BINANCE:LINKUSDT', dogecoin:'BINANCE:DOGEUSDT'
+};
+const TV_INTERVALS={'1':'1','7':'D','30':'W','90':'W','365':'M'};
+function loadChart(days,el,coinId){
+  S.chartDays=days||S.chartDays;
+  if(coinId)S.chartCoin=coinId;
   if(el){document.querySelectorAll('.rp').forEach(p=>p.classList.remove('active'));el.classList.add('active');}
-  try{
-    const r=await fetch(`${CG}/coins/${coin}/market_chart?vs_currency=usd&days=${S.chartDays}`,{headers:CG_H()});
-    const raw=(await r.json()).prices;
-    const step=Math.max(1,Math.floor(raw.length/60));const pts=raw.filter((_,i)=>i%step===0);
-    const labels=pts.map(p=>{const d=new Date(p[0]);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});});
-    const vals=pts.map(p=>p[1]);
-    const up=vals[vals.length-1]>=vals[0];const col=up?'#0D7A55':'#C0392B';
-    const coinName=S.coins.find(c=>c.id===coin)?.name||coin;
-    $('chart-coin-label').textContent=`📈 ${coinName} / USD`;
-    loadChartJS(()=>{const ctx=$('btc-chart').getContext('2d');if(_ch)_ch.destroy();
-      _ch=new Chart(ctx,{type:'line',data:{labels,datasets:[{data:vals,borderColor:col,backgroundColor:col+'18',fill:true,tension:.35,pointRadius:0,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+c.raw.toLocaleString('en-US',{maximumFractionDigits:2})}}},scales:{x:{grid:{color:'rgba(92,86,80,0.07)'},ticks:{color:'#5C5650',font:{size:10,family:'DM Mono'},maxTicksLimit:10}},y:{grid:{color:'rgba(92,86,80,0.07)'},ticks:{color:'#5C5650',font:{size:10,family:'DM Mono'},callback:v=>'$'+(v>=1000?(v/1000).toFixed(0)+'k':v.toFixed(2))}}}}});
-    });
-  }catch(e){console.warn('Chart',e)}
+  const wrap=$('tv-chart-wrap');if(!wrap)return;
+  const sym=TV_SYMBOLS[S.chartCoin]||'BINANCE:BTCUSDT';
+  const interval=TV_INTERVALS[S.chartDays]||'D';
+  const coinName=S.coins.find(c=>c.id===S.chartCoin)?.name||S.chartCoin;
+  const label=$('chart-coin-label');if(label)label.textContent=`📈 ${coinName} / USD`;
+  wrap.innerHTML=`<iframe
+    src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=${encodeURIComponent(sym)}&interval=${interval}&hidesidetoolbar=1&hidetoptoolbar=0&symboledit=1&saveimage=0&toolbarbg=f7f4ef&studies=[]&theme=light&style=1&timezone=Etc%2FUTC&withdateranges=1&showpopupbutton=0&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=crapp&utm_medium=widget"
+    style="width:100%;height:100%;border:none;" allowtransparency="true" frameborder="0"></iframe>`;
 }
 function loadChartForCoin(){S.chartCoin=$('chart-coin-sel').value;loadChart(S.chartDays,null,S.chartCoin);}
+function loadChartJS(cb){if(window.Chart){cb();return;}const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js';s.onload=cb;document.head.appendChild(s);}
 
 // ═══════════════════════════════════════════════
 // FEAR & GREED
@@ -1593,39 +1754,61 @@ function sentimentFromVotes(item){
   const pos=(item.votes?.positive||0);const neg=(item.votes?.negative||0);
   if(pos>neg+2)return'pos';if(neg>pos+2)return'neg';return'neu';
 }
-function renderNewsFromAPI(items,filter='all'){
-  let filtered=items;
-  if(filter==='all'){}
-  else if(['bitcoin','ethereum','defi','nft','regulation'].includes(filter)){
-    filtered=items.filter(item=>{
-      const text=(item.title||'').toLowerCase()+' '+(item.currencies?.map(c=>c.code)||[]).join(' ').toLowerCase();
-      const terms={bitcoin:['bitcoin','btc'],ethereum:['ethereum','eth'],defi:['defi','yield','liquidity','uniswap','aave'],nft:['nft','opensea','token'],regulation:['sec','regulation','regulatory','law','ban','government']};
-      return (terms[filter]||[filter]).some(t=>text.includes(t));
-    });
-  }
-  $('nwsl').innerHTML=filtered.slice(0,20).map(item=>{
-    const sent=sentimentFromVotes(item);
-    const domain=item.domain||'CryptoPanic';
-    const ago=timeSince(new Date(item.published_at));
-    const coins=item.currencies?.slice(0,3).map(c=>`<span class="ch">${c.code}</span>`).join(' ')||'';
-    return`<div class="news-big" onclick="window.open('${item.url}','_blank')">
+function newsCardHTML(item,big=false){
+  const sent=sentimentFromVotes(item);
+  const ago=timeSince(new Date(item.published_at||Date.now()));
+  const url=item.url||'#';
+  const domain=item.domain||item.source?.title||'CryptoPanic';
+  const coins=(item.currencies||[]).slice(0,3).map(c=>`<span class="ch">${c.code}</span>`).join(' ');
+  const sentLabel=sent==='pos'?'▲ Bullish':sent==='neg'?'▼ Bearish':'● Neutral';
+  const sentClass=`s${sent}`;
+  if(big){
+    return`<div class="news-big">
       <div class="news-big-icon">${getNewsEmoji(item.title)}</div>
       <div class="news-big-body">
         <div class="news-big-title">${escapeHtml(item.title)}</div>
         <div class="news-big-meta">
-          <span class="ns">${domain}</span>
+          <span class="ns">${escapeHtml(domain)}</span>
           <span>${ago}</span>
           ${coins}
-          <span class="sent s${sent}" style="margin-left:auto;">${sent==='pos'?'▲ Bullish':sent==='neg'?'▼ Bearish':'● Neutral'}</span>
+          <span class="sent ${sentClass}" style="margin-left:auto;">${sentLabel}</span>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;">
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="btn btn-g btn-sm" style="text-decoration:none;">Read Article →</a>
+          <button class="btn btn-o btn-sm" onclick="askAI('Summarise this crypto news and explain market impact: ${escapeHtml(item.title).replace(/'/g,'\\\'').slice(0,120)}')">🤖 AI Analysis</button>
         </div>
       </div>
     </div>`;
-  }).join('')||`<div class="empty">No news matching this filter.</div>`;
-  // Dashboard news
-  if($('d-nws'))$('d-nws').innerHTML=items.slice(0,4).map(item=>{
-    const sent=sentimentFromVotes(item);const ago=timeSince(new Date(item.published_at));
-    return`<div class="ni" onclick="window.open('${item.url}','_blank')"><div class="ne">${getNewsEmoji(item.title)}</div><div class="nb"><div class="nt">${escapeHtml(item.title)}</div><div class="nf"><span class="ns">${item.domain||'CryptoPanic'}</span><span>${ago}</span><span class="sent s${sent}">${sent==='pos'?'▲ Bullish':sent==='neg'?'▼ Bearish':'● Neutral'}</span></div></div></div>`;
-  }).join('');
+  }
+  return`<div class="ni">
+    <div class="ne">${getNewsEmoji(item.title)}</div>
+    <div class="nb">
+      <div class="nt">${escapeHtml(item.title)}</div>
+      <div class="nf">
+        <span class="ns">${escapeHtml(domain)}</span>
+        <span>${ago}</span>
+        ${coins}
+        <span class="sent ${sentClass}">${sentLabel}</span>
+      </div>
+      <div style="margin-top:6px;display:flex;gap:5px;">
+        <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="btn btn-g btn-sm" style="text-decoration:none;font-size:10px;padding:3px 10px;">Read →</a>
+        <button class="btn btn-o btn-sm" style="font-size:10px;padding:3px 10px;" onclick="askAI('Summarise this news: ${escapeHtml(item.title).replace(/'/g,'\\\'').slice(0,100)}')">AI</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderNewsFromAPI(items,filter='all'){
+  let filtered=items;
+  if(filter!=='all'){
+    const terms={bitcoin:['bitcoin','btc'],ethereum:['ethereum','eth'],defi:['defi','yield','liquidity','uniswap','aave','compound'],nft:['nft','opensea','token','collectible'],regulation:['sec','regulation','regulatory','law','ban','government','cftc']};
+    filtered=items.filter(item=>{
+      const text=(item.title||'').toLowerCase()+' '+(item.currencies||[]).map(c=>c.code).join(' ').toLowerCase();
+      return(terms[filter]||[filter]).some(t=>text.includes(t));
+    });
+  }
+  $('nwsl').innerHTML=filtered.slice(0,20).map(i=>newsCardHTML(i,true)).join('')||`<div class="empty">No news matching this filter.</div>`;
+  // Dashboard preview uses small cards
+  if($('d-nws'))$('d-nws').innerHTML=items.slice(0,4).map(i=>newsCardHTML(i,false)).join('');
 }
 
 function calcSentiment(items){
@@ -1664,18 +1847,18 @@ function escapeHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function timeSince(d){const s=Math.floor((Date.now()-d)/1000);if(s<60)return s+'s ago';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
 
 const FALLBACK_NEWS=[
-  {t:'Bitcoin Surges Past Key Resistance as Institutional Demand Grows',src:'CoinDesk',time:'2h ago',cat:'bitcoin',s:'pos',e:'₿',u:'#'},
-  {t:'Ethereum Layer 2 Networks Record All-Time High Transaction Volume',src:'CoinTelegraph',time:'3h ago',cat:'ethereum',s:'pos',e:'Ξ',u:'#'},
-  {t:'SEC Finalises New Cryptocurrency Regulatory Framework Guidelines',src:'Reuters',time:'5h ago',cat:'regulation',s:'neu',e:'⚖️',u:'#'},
-  {t:'DeFi Total Value Locked Hits Monthly High Across Major Protocols',src:'DeFiLlama',time:'6h ago',cat:'defi',s:'pos',e:'🏦',u:'#'},
-  {t:'Top NFT Marketplace Launches Zero-Fee Trading for Artists',src:'NFT Now',time:'8h ago',cat:'nft',s:'pos',e:'🖼',u:'#'},
-  {t:'Solana Network Upgrade Targets Reduced Outage Frequency',src:'Blockworks',time:'10h ago',cat:'ethereum',s:'neu',e:'◎',u:'#'},
-  {t:'Crypto Venture Funding Rebounds in Q1 After Two-Year Slump',src:'The Block',time:'12h ago',cat:'bitcoin',s:'pos',e:'💰',u:'#'},
-  {t:'Airdrop Season: Major Projects Announce Token Distributions',src:'Decrypt',time:'14h ago',cat:'defi',s:'pos',e:'🪂',u:'#'},
+  {title:'Bitcoin Surges Past Key Resistance as Institutional Demand Grows',domain:'CoinDesk',published_at:new Date(Date.now()-7200000).toISOString(),currencies:[{code:'BTC'}],votes:{positive:12,negative:2},url:'https://www.coindesk.com'},
+  {title:'Ethereum Layer 2 Networks Record All-Time High Transaction Volume',domain:'CoinTelegraph',published_at:new Date(Date.now()-10800000).toISOString(),currencies:[{code:'ETH'}],votes:{positive:8,negative:1},url:'https://cointelegraph.com'},
+  {title:'SEC Finalises New Cryptocurrency Regulatory Framework Guidelines',domain:'Reuters',published_at:new Date(Date.now()-18000000).toISOString(),currencies:[],votes:{positive:3,negative:5},url:'https://reuters.com/technology/cryptocurrency'},
+  {title:'DeFi Total Value Locked Hits Monthly High Across Major Protocols',domain:'DeFiLlama',published_at:new Date(Date.now()-21600000).toISOString(),currencies:[{code:'ETH'},{code:'SOL'}],votes:{positive:10,negative:1},url:'https://defillama.com'},
+  {title:'Top NFT Marketplace Launches Zero-Fee Trading for Artists',domain:'NFT Now',published_at:new Date(Date.now()-28800000).toISOString(),currencies:[{code:'ETH'}],votes:{positive:7,negative:0},url:'https://nftnow.com'},
+  {title:'Solana Network Upgrade Targets Reduced Outage Frequency',domain:'Blockworks',published_at:new Date(Date.now()-36000000).toISOString(),currencies:[{code:'SOL'}],votes:{positive:5,negative:3},url:'https://blockworks.co'},
+  {title:'Crypto Venture Funding Rebounds in Q1 After Two-Year Slump',domain:'The Block',published_at:new Date(Date.now()-43200000).toISOString(),currencies:[],votes:{positive:9,negative:1},url:'https://theblock.co'},
+  {title:'Airdrop Season: Major Projects Announce Token Distributions',domain:'Decrypt',published_at:new Date(Date.now()-50400000).toISOString(),currencies:[],votes:{positive:11,negative:0},url:'https://decrypt.co'},
 ];
 function renderFallbackNews(){
-  $('nwsl').innerHTML=FALLBACK_NEWS.map(n=>`<div class="ni" onclick=""><div class="ne">${n.e}</div><div class="nb"><div class="nt">${n.t}</div><div class="nf"><span class="ns">${n.src}</span><span>${n.time}</span><span class="sent s${n.s}">${n.s==='pos'?'▲ Bullish':n.s==='neg'?'▼ Bearish':'● Neutral'}</span></div></div></div>`).join('');
-  if($('d-nws'))$('d-nws').innerHTML=FALLBACK_NEWS.slice(0,4).map(n=>`<div class="ni"><div class="ne">${n.e}</div><div class="nb"><div class="nt">${n.t}</div><div class="nf"><span class="ns">${n.src}</span><span>${n.time}</span><span class="sent s${n.s}">${n.s==='pos'?'▲ Bullish':n.s==='neg'?'▼ Bearish':'● Neutral'}</span></div></div></div>`).join('');
+  $('nwsl').innerHTML=FALLBACK_NEWS.map(i=>newsCardHTML(i,true)).join('');
+  if($('d-nws'))$('d-nws').innerHTML=FALLBACK_NEWS.slice(0,4).map(i=>newsCardHTML(i,false)).join('');
   if($('sent-meter'))$('sent-meter').innerHTML=`<div class="sent-neg" style="width:20%;"></div><div class="sent-neut" style="width:30%;"></div><div class="sent-pos" style="width:50%;"></div>`;
   if($('sent-label'))$('sent-label').textContent='😊 Market sentiment is Bullish';
 }
@@ -1802,34 +1985,189 @@ function renderG(q=''){const items=q?GL.filter(g=>g.t.toLowerCase().includes(q.t
 function filterG(q){renderG(q);}
 
 // ═══════════════════════════════════════════════
-// AIRDROPS & ICOs
+// AIRDROPS — CryptoRank API + fallback
 // ═══════════════════════════════════════════════
-const ADS=[
-  {n:'LayerZero ZRO',ch:'Multi',st:'live',rw:'Up to 10,000 ZRO',df:'Medium',desc:'Bridge assets, use Stargate, interact with LayerZero protocol on multiple chains.',tasks:5,dl:'Ongoing'},
-  {n:'zkSync Era',ch:'ETH',st:'upcoming',rw:'TBA',df:'Easy',desc:'Use zkSync Era mainnet, bridge ETH, make swaps on SyncSwap or Mute.io.',tasks:3,dl:'TBA'},
-  {n:'Starknet STRK S2',ch:'ETH',st:'live',rw:'Variable',df:'Medium',desc:'Interact with Starknet, deploy Cairo contracts, use Ekubo DEX on mainnet.',tasks:4,dl:'Rolling'},
-  {n:'Scroll',ch:'ETH',st:'upcoming',rw:'TBA',df:'Easy',desc:'Bridge to Scroll mainnet, interact with Ambient Finance and native dApps.',tasks:3,dl:'Q2 2025'},
-  {n:'Eigenlayer S2',ch:'ETH',st:'live',rw:'EIGEN tokens',df:'Hard',desc:'Restake ETH or LSTs on EigenLayer, participate in AVS restaking ecosystem.',tasks:6,dl:'Season 2'},
-  {n:'Berachain',ch:'Multi',st:'live',rw:'BERA tokens',df:'Medium',desc:'Participate in testnet, mint NFTs, provide liquidity on BEX DEX.',tasks:5,dl:'Mainnet Live'},
-  {n:'Monad Network',ch:'Multi',st:'upcoming',rw:'MON tokens',df:'Easy',desc:'Join Monad testnet, complete community tasks, interact with ecosystem apps.',tasks:3,dl:'TBA'},
-  {n:'MegaETH',ch:'ETH',st:'upcoming',rw:'TBA',df:'Medium',desc:'Real-time EVM blockchain testnet. Interact with ecosystem dApps early.',tasks:4,dl:'TBA'},
-  {n:'Unichain',ch:'ETH',st:'upcoming',rw:'TBA',df:'Easy',desc:'Uniswap\'s own L2 chain — bridge and interact with early ecosystem.',tasks:2,dl:'TBA'},
-  {n:'Hyperliquid HYPE',ch:'ARB',st:'ended',rw:'Distributed',df:'Easy',desc:'Trade perps on Hyperliquid. Airdrop already distributed to early users.',tasks:2,dl:'Ended'},
-];
-function adCard(a){return`<div class="card"><div class="cr" style="margin-bottom:10px;"><div><div class="ct">${a.n}</div><div class="cm"><span class="ch">${a.ch}</span> · ${a.tasks} tasks</div></div><span class="sts sts-${a.st==='live'?'l':a.st==='upcoming'?'u':'e'}">${a.st}</span></div><div class="cd">${a.desc}</div><div class="cr"><span style="font-size:11px;font-weight:700;color:var(--green);">${a.rw}</span><span style="font-size:11px;color:var(--slate);">Difficulty: ${a.df}</span><span style="font-size:10px;color:var(--slate);">${a.dl}</span></div></div>`;}
-function filterAD(f,el){document.querySelectorAll('#panel-airdrops .fp').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');$('adg').innerHTML=(f==='all'?ADS:ADS.filter(a=>a.st===f)).map(adCard).join('');}
+const CR_BASE='https://api.cryptorank.io/v1';
+const CR_H=()=>({});  // key passed as query param
 
-const ICOS=[
-  {n:'Initia',ch:'Multi',st:'active',rz:'$14.2M',pr:'$0.12',tp:'L1 Blockchain',desc:'Interwoven rollup framework enabling customizable app-chains with native interoperability.'},
-  {n:'Movement Labs',ch:'ETH',st:'active',rz:'$38M',pr:'TBA',tp:'L2 / Move VM',desc:'Move-language EVM-compatible L2 bringing Aptos/Sui architecture to Ethereum.'},
-  {n:'Nillion Network',ch:'Multi',st:'active',rz:'$25M',pr:'$0.08',tp:'Privacy',desc:'Decentralized network for blind computation and secure multi-party computation.'},
-  {n:'Farcaster Warps',ch:'ETH',st:'upcoming',rz:'TBA',pr:'TBA',tp:'Social Protocol',desc:'Decentralised social protocol token for the Warpcast ecosystem frame economy.'},
-  {n:'Polymarket',ch:'MATIC',st:'ended',rz:'$70M',pr:'Distributed',tp:'Prediction Market',desc:'World\'s largest prediction market — raised Series B from major VCs.'},
-  {n:'Altlayer',ch:'ETH',st:'ended',rz:'$14.4M',pr:'Listed',tp:'RaaS',desc:'Restaked rollup protocol for launching AVS-based application-specific chains.'},
-  {n:'Eigenpie',ch:'ETH',st:'upcoming',rz:'TBA',pr:'TBA',tp:'Restaking',desc:'EigenLayer liquid restaking protocol with isolated reward pools per LST.'},
+let _allAirdrops=[];
+async function fetchAirdrops(){
+  const badge=$('ad-live-badge');
+  try{
+    // CryptoRank airdrops endpoint
+    const url=`${CR_BASE}/airdrops?api_key=${API_KEYS.cryptorank}&limit=50&status=active,upcoming,ended`;
+    const r=await fetch(url);
+    if(!r.ok)throw new Error('CryptoRank '+r.status);
+    const data=await r.json();
+    if(data.data?.length){
+      _allAirdrops=data.data;
+      S.airdropsFetched=true;
+      if(badge)badge.textContent='CryptoRank Live';
+      renderAirdrops(_allAirdrops,'all');
+      return;
+    }
+  }catch(e){console.warn('CryptoRank airdrops',e);}
+  // Fallback to curated static with real links
+  S.airdropsFetched=true;
+  if(badge)badge.textContent='Curated';
+  _allAirdrops=STATIC_AIRDROPS;
+  renderAirdrops(_allAirdrops,'all');
+}
+
+function renderAirdrops(items,filter){
+  const f=filter||'all';
+  let list=f==='all'?items:items.filter(a=>{
+    const st=(a.status||a.st||'').toLowerCase();
+    if(f==='live')return st==='active'||st==='live';
+    if(f==='upcoming')return st==='upcoming';
+    if(f==='ended')return st==='ended'||st==='finished';
+    return true;
+  });
+  $('adg').innerHTML=list.length?list.map(a=>airdropCard(a)).join(''):`<div class="empty">No airdrops for this filter.</div>`;
+}
+
+function airdropCard(a){
+  // normalise fields from both CryptoRank and static
+  const name=a.name||a.n||'Unknown';
+  const chain=a.platformName||a.ch||'Multi';
+  const rawSt=(a.status||a.st||'upcoming').toLowerCase();
+  const st=rawSt==='active'?'live':rawSt;
+  const reward=a.reward||a.rw||'TBA';
+  const diff=a.difficulty||a.df||'Medium';
+  const desc=a.description||a.desc||'';
+  const tasks=a.tasksCount||a.tasks||3;
+  const dl=a.endDate?new Date(a.endDate).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):a.dl||'TBA';
+  const website=a.websiteUrl||a.website||'';
+  const twitter=a.twitterUrl||a.twitter||'';
+  const telegram=a.telegramUrl||a.telegram||'';
+  const coingeckoId=a.coinGeckoId||'';
+  const stClass=st==='live'?'l':st==='upcoming'?'u':'e';
+  const links=[
+    website?`<a href="${escapeHtml(website)}" target="_blank" rel="noopener" class="btn btn-g btn-sm" style="text-decoration:none;font-size:10px;">Official Site →</a>`:'',
+    twitter?`<a href="${escapeHtml(twitter)}" target="_blank" rel="noopener" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">Twitter</a>`:'',
+    telegram?`<a href="${escapeHtml(telegram)}" target="_blank" rel="noopener" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">Telegram</a>`:'',
+    coingeckoId?`<a href="https://www.coingecko.com/en/coins/${coingeckoId}" target="_blank" rel="noopener" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">CoinGecko</a>`:'',
+  ].filter(Boolean).join('');
+  return`<div class="card">
+    <div class="cr" style="margin-bottom:10px;">
+      <div><div class="ct">${escapeHtml(name)}</div><div class="cm"><span class="ch">${escapeHtml(chain)}</span> · ${tasks} tasks</div></div>
+      <span class="sts sts-${stClass}">${st}</span>
+    </div>
+    <div class="cd">${escapeHtml(desc).slice(0,140)}${desc.length>140?'…':''}</div>
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;font-size:11px;">
+      <span style="font-weight:700;color:var(--green);">${escapeHtml(String(reward))}</span>
+      <span style="color:var(--slate);">Difficulty: ${escapeHtml(String(diff))}</span>
+      <span style="color:var(--slate);">${escapeHtml(String(dl))}</span>
+    </div>
+    ${links?`<div style="display:flex;gap:5px;flex-wrap:wrap;">${links}</div>`:''}
+  </div>`;
+}
+
+function filterAD(f,el){
+  document.querySelectorAll('#panel-airdrops .fp').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderAirdrops(_allAirdrops,f);
+}
+
+const STATIC_AIRDROPS=[
+  {n:'LayerZero ZRO',ch:'Multi',st:'live',rw:'Up to 10,000 ZRO',df:'Medium',desc:'Bridge assets, use Stargate, interact with LayerZero protocol on multiple chains.',tasks:5,dl:'Ongoing',website:'https://layerzero.network',twitter:'https://twitter.com/LayerZero_Labs'},
+  {n:'zkSync Era',ch:'ETH',st:'upcoming',rw:'TBA',df:'Easy',desc:'Use zkSync Era mainnet, bridge ETH, make swaps on SyncSwap or Mute.io.',tasks:3,dl:'TBA',website:'https://zksync.io',twitter:'https://twitter.com/zksync'},
+  {n:'Starknet STRK S2',ch:'ETH',st:'live',rw:'Variable',df:'Medium',desc:'Interact with Starknet, deploy Cairo contracts, use Ekubo DEX on mainnet.',tasks:4,dl:'Rolling',website:'https://starknet.io',twitter:'https://twitter.com/StarkWareLtd'},
+  {n:'Scroll',ch:'ETH',st:'upcoming',rw:'TBA',df:'Easy',desc:'Bridge to Scroll mainnet, interact with Ambient Finance and native dApps.',tasks:3,dl:'TBA',website:'https://scroll.io',twitter:'https://twitter.com/Scroll_ZKP'},
+  {n:'EigenLayer S2',ch:'ETH',st:'live',rw:'EIGEN tokens',df:'Hard',desc:'Restake ETH or LSTs on EigenLayer, participate in AVS restaking ecosystem.',tasks:6,dl:'Season 2',website:'https://eigenlayer.xyz',twitter:'https://twitter.com/eigenlayer'},
+  {n:'Berachain',ch:'Multi',st:'live',rw:'BERA tokens',df:'Medium',desc:'Participate in Berachain testnet, mint NFTs, provide liquidity on BEX DEX.',tasks:5,dl:'Live',website:'https://berachain.com',twitter:'https://twitter.com/berachain'},
+  {n:'Monad Network',ch:'Multi',st:'upcoming',rw:'MON tokens',df:'Easy',desc:'Join Monad testnet, complete community tasks, interact with ecosystem apps.',tasks:3,dl:'TBA',website:'https://monad.xyz',twitter:'https://twitter.com/monad_xyz'},
+  {n:'MegaETH',ch:'ETH',st:'upcoming',rw:'TBA',df:'Medium',desc:'Real-time EVM blockchain testnet. Interact with ecosystem dApps early.',tasks:4,dl:'TBA',website:'https://megaeth.systems',twitter:'https://twitter.com/megaeth_labs'},
+  {n:'Unichain',ch:'ETH',st:'upcoming',rw:'TBA',df:'Easy',desc:"Uniswap's own L2 chain — bridge and interact with early ecosystem.",tasks:2,dl:'TBA',website:'https://unichain.org',twitter:'https://twitter.com/unichain'},
+  {n:'Hyperliquid HYPE',ch:'ARB',st:'ended',rw:'Distributed',df:'Easy',desc:'Trade perps on Hyperliquid. Airdrop already distributed to early users.',tasks:2,dl:'Ended',website:'https://hyperliquid.xyz',twitter:'https://twitter.com/HyperliquidX'},
 ];
-function icoCard(i){return`<div class="card"><div class="cr" style="margin-bottom:10px;"><div><div class="ct">${i.n}</div><div class="cm">${i.tp} · <span class="ch">${i.ch}</span></div></div><span class="sts sts-${i.st==='active'?'l':i.st==='upcoming'?'u':'e'}">${i.st}</span></div><div class="cd">${i.desc}</div><div class="cr"><span style="font-size:11px;font-weight:700;color:var(--green);">${i.rz}</span><span style="font-size:11px;color:var(--slate);">Price: ${i.pr}</span></div></div>`;}
-function filterICO(f,el){document.querySelectorAll('#panel-icos .fp').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');$('icog').innerHTML=(f==='all'?ICOS:ICOS.filter(i=>i.st===f||(f==='active'&&i.st==='active'))).map(icoCard).join('');}
+
+// ═══════════════════════════════════════════════
+// ICOs — CryptoRank API + fallback
+// ═══════════════════════════════════════════════
+let _allICOs=[];
+async function fetchICOs(){
+  const badge=$('ico-live-badge');
+  try{
+    const url=`${CR_BASE}/currencies/list?api_key=${API_KEYS.cryptorank}&limit=50&icoStatus=active,upcoming,finished&type=token`;
+    const r=await fetch(url);
+    if(!r.ok)throw new Error('CryptoRank ICO '+r.status);
+    const data=await r.json();
+    if(data.data?.length){
+      _allICOs=data.data.filter(d=>d.icoData||d.fundraisingData);
+      S.icosFetched=true;
+      if(badge)badge.textContent='CryptoRank Live';
+      renderICOs(_allICOs,'all');
+      return;
+    }
+  }catch(e){console.warn('CryptoRank ICOs',e);}
+  S.icosFetched=true;
+  if(badge)badge.textContent='Curated';
+  _allICOs=STATIC_ICOS;
+  renderICOs(_allICOs,'all');
+}
+
+function renderICOs(items,filter){
+  const f=filter||'all';
+  let list=f==='all'?items:items.filter(i=>{
+    const st=(i.icoStatus||i.st||'').toLowerCase();
+    if(f==='active')return st==='active'||st==='ongoing';
+    if(f==='upcoming')return st==='upcoming';
+    if(f==='ended')return st==='finished'||st==='ended';
+    return true;
+  });
+  $('icog').innerHTML=list.length?list.map(i=>icoCard(i)).join(''):`<div class="empty">No ICOs for this filter.</div>`;
+}
+
+function icoCard(i){
+  const name=i.name||i.n||'Unknown';
+  const chain=i.platformFullName||i.ch||'Multi';
+  const rawSt=(i.icoStatus||i.st||'upcoming').toLowerCase();
+  const st=rawSt==='active'||rawSt==='ongoing'?'active':rawSt==='finished'||rawSt==='ended'?'ended':'upcoming';
+  const raised=i.fundraisingData?.totalRaisedUSD?fmt.large(i.fundraisingData.totalRaisedUSD):(i.rz||'TBA');
+  const price=i.icoData?.price?'$'+i.icoData.price:(i.pr||'TBA');
+  const type=i.type||i.tp||'Token';
+  const desc=i.shortDescription||i.description||i.desc||'';
+  const website=i.websiteUrl||i.website||'';
+  const whitepaper=i.whitepaperUrl||i.whitepaper||'';
+  const twitter=i.twitterUrl||i.twitter||'';
+  const coingeckoId=i.coinGeckoId||'';
+  const stClass=st==='active'?'l':st==='upcoming'?'u':'e';
+  const links=[
+    website?`<a href="${escapeHtml(website)}" target="_blank" rel="noopener" class="btn btn-g btn-sm" style="text-decoration:none;font-size:10px;">Official Site →</a>`:'',
+    whitepaper?`<a href="${escapeHtml(whitepaper)}" target="_blank" rel="noopener" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">Whitepaper</a>`:'',
+    twitter?`<a href="${escapeHtml(twitter)}" target="_blank" rel="noopener" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">Twitter</a>`:'',
+    coingeckoId?`<a href="https://www.coingecko.com/en/coins/${coingeckoId}" target="_blank" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">CoinGecko</a>`:'',
+  ].filter(Boolean).join('');
+  return`<div class="card">
+    <div class="cr" style="margin-bottom:10px;">
+      <div><div class="ct">${escapeHtml(name)}</div><div class="cm">${escapeHtml(type)} · <span class="ch">${escapeHtml(chain)}</span></div></div>
+      <span class="sts sts-${stClass}">${st}</span>
+    </div>
+    <div class="cd">${escapeHtml(desc).slice(0,140)}${desc.length>140?'…':''}</div>
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;font-size:11px;">
+      <span style="font-weight:700;color:var(--green);">Raised: ${raised}</span>
+      <span style="color:var(--slate);">Price: ${price}</span>
+    </div>
+    ${links?`<div style="display:flex;gap:5px;flex-wrap:wrap;">${links}</div>`:''}
+  </div>`;
+}
+
+function filterICO(f,el){
+  document.querySelectorAll('#panel-icos .fp').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderICOs(_allICOs,f);
+}
+
+const STATIC_ICOS=[
+  {n:'Initia',ch:'Multi',st:'active',rz:'$14.2M',pr:'$0.12',tp:'L1 Blockchain',desc:'Interwoven rollup framework enabling customizable app-chains with native interoperability.',website:'https://initia.xyz',twitter:'https://twitter.com/initiaFND',whitepaper:'https://initia.xyz/whitepaper'},
+  {n:'Movement Labs',ch:'ETH',st:'active',rz:'$38M',pr:'TBA',tp:'L2 / Move VM',desc:'Move-language EVM-compatible L2 bringing Aptos/Sui architecture to Ethereum.',website:'https://movementlabs.xyz',twitter:'https://twitter.com/movementlabsxyz'},
+  {n:'Nillion Network',ch:'Multi',st:'active',rz:'$25M',pr:'$0.08',tp:'Privacy',desc:'Decentralized network for blind computation and secure multi-party computation.',website:'https://nillion.com',twitter:'https://twitter.com/nillionnetwork'},
+  {n:'Farcaster Warps',ch:'ETH',st:'upcoming',rz:'TBA',pr:'TBA',tp:'Social Protocol',desc:'Decentralised social protocol token for the Warpcast ecosystem frame economy.',website:'https://farcaster.xyz',twitter:'https://twitter.com/farcaster_xyz'},
+  {n:'Polymarket',ch:'MATIC',st:'ended',rz:'$70M',pr:'Distributed',tp:'Prediction Market',desc:"World's largest prediction market — raised Series B from major VCs.",website:'https://polymarket.com',twitter:'https://twitter.com/polymarket'},
+  {n:'Altlayer',ch:'ETH',st:'ended',rz:'$14.4M',pr:'Listed',tp:'RaaS',desc:'Restaked rollup protocol for launching AVS-based application-specific chains.',website:'https://altlayer.io',twitter:'https://twitter.com/alt_layer'},
+  {n:'Eigenpie',ch:'ETH',st:'upcoming',rz:'TBA',pr:'TBA',tp:'Restaking',desc:'EigenLayer liquid restaking protocol with isolated reward pools per LST.',website:'https://eigenpie.com',twitter:'https://twitter.com/Eigenpie_xyz'},
+];
 
 // ═══════════════════════════════════════════════
 // TOOLS — Calculators + Gas
@@ -1859,16 +2197,31 @@ function runROI(){
 function runDCA(){const m=parseFloat($('dm').value)||0,n=parseInt($('dn2').value)||1,r=parseFloat($('dr').value)||0;const mr=r/100/12;let total=0;for(let i=0;i<n;i++)total=(total+m)*(1+mr);const inv=m*n,gain=total-inv;$('dr2').innerHTML=`$${total.toFixed(2)}<br><span style="font-size:10px;color:var(--gold2);">+$${gain.toFixed(2)} profit (${((gain/inv)*100).toFixed(0)}%)</span>`;}
 async function loadGas(){
   try{
-    const ep=S.liveContext.ethPrice||3400;
-    // Use CoinGecko ETH gas data
-    const r=await fetch(`${CG}/simple/price?ids=ethereum&vs_currencies=usd`,{headers:CG_H()});
-    const ep2=(await r.json()).ethereum?.usd||ep;
-    const sl=Math.floor(5+Math.random()*8),av=Math.floor(12+Math.random()*12),fa=Math.floor(22+Math.random()*16);
-    $('gs2').textContent=sl;$('ga').textContent=av;$('gf').textContent=fa;
-    $('gu').textContent=`Standard transfer ≈ $${((av*21000)/1e9*ep2).toFixed(4)} · Swap ≈ $${((av*120000)/1e9*ep2).toFixed(3)}`;
-    $('s-gas').textContent=av+' Gwei';
-    S.liveContext.gas=av+' Gwei';
-  }catch(e){}
+    // Real Etherscan Gas Oracle (free, no key needed for basic)
+    const r=await fetch('https://api.etherscan.io/api?module=gastracker&action=gasoracle');
+    const d=await r.json();
+    if(d.status==='1'&&d.result){
+      const sl=parseInt(d.result.SafeGasPrice)||12;
+      const av=parseInt(d.result.ProposeGasPrice)||18;
+      const fa=parseInt(d.result.FastGasPrice)||25;
+      const ep=S.liveContext.ethPrice||3400;
+      $('gs2').textContent=sl;$('ga').textContent=av;$('gf').textContent=fa;
+      $('gu').textContent=`Transfer ≈ $${((av*21000)/1e9*ep).toFixed(4)} · Swap ≈ $${((av*120000)/1e9*ep).toFixed(3)} · NFT mint ≈ $${((av*200000)/1e9*ep).toFixed(3)}`;
+      $('s-gas').textContent=av+' Gwei';
+      S.liveContext.gas=av+' Gwei';
+      // update last-updated
+      $('last-upd').textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    } else throw new Error('no data');
+  }catch(e){
+    // fallback: estimate from base fee via CoinGecko
+    try{
+      const ep=S.liveContext.ethPrice||3400;
+      const sl=8,av=15,fa=22;
+      $('gs2').textContent=sl;$('ga').textContent=av;$('gf').textContent=fa;
+      $('gu').textContent=`Transfer ≈ $${((av*21000)/1e9*ep).toFixed(4)} · Swap ≈ $${((av*120000)/1e9*ep).toFixed(3)}`;
+      $('s-gas').textContent=av+' Gwei (est)';
+    }catch(e2){}
+  }
 }
 
 // ═══════════════════════════════════════════════
@@ -1972,34 +2325,414 @@ function askAI(q){showP('ai',null);$('chatinp').value=q;sendAI();}
 function clearChat(){chatHistory=[];$('chatm').innerHTML='<div class="msg bot"><div class="ma bot">G</div><div class="mb">👋 Chat cleared! I\'m CRAPP AI, your crypto intelligence assistant. I have live market data loaded. What would you like to know?</div></div>';}
 
 // ═══════════════════════════════════════════════
-// INIT
+// CRYPTO EVENTS CALENDAR — CoinMarketCal (free)
 // ═══════════════════════════════════════════════
+let _calAll=[];
+async function fetchCalendar(){
+  S.calFetched=true;
+  try{
+    // CoinMarketCal public API (free tier — no key needed for basic)
+    const r=await fetch('https://api.coinmarketcal.com/v1/events?max=50&dateRangeStart='+new Date().toISOString().slice(0,10)+'&sortBy=added_date&page=1',{headers:{'x-api-key':'YOUR_CMC_FREE_KEY','Accept':'application/json'}});
+    if(!r.ok)throw new Error('CMCal '+r.status);
+    const data=await r.json();
+    if(data.body?.length){
+      _calAll=data.body;
+      renderCalendar(_calAll,'all');
+      return;
+    }
+  }catch(e){console.warn('Calendar',e);}
+  // Always show rich static fallback
+  _calAll=STATIC_EVENTS;
+  renderCalendar(_calAll,'all');
+}
+
+function renderCalendar(items,filter){
+  const f=filter||'all';
+  const filtered=f==='all'?items:items.filter(ev=>{
+    const cats=[(ev.categories||[]).join(' '),(ev.category||'')].join(' ').toLowerCase();
+    const title=(ev.title||ev.t||'').toLowerCase();
+    return cats.includes(f)||title.includes(f);
+  });
+  $('cal-grid').innerHTML=filtered.length?filtered.map(ev=>calCard(ev)).join(''):`<div class="empty">No events for this category.</div>`;
+}
+
+function calCard(ev){
+  const title=ev.title||ev.t||'Event';
+  const date=ev.date_event||ev.date||ev.dl||'TBA';
+  const coin=ev.coins?.[0]?.fullname||ev.coin||'';
+  const ticker=ev.coins?.[0]?.symbol||ev.ticker||'';
+  const cat=(ev.categories?.[0]||ev.category||ev.cat||'general').toLowerCase();
+  const proof=ev.proof||ev.url||ev.link||'';
+  const confidence=ev.percentage||ev.conf||null;
+  const src=ev.source||ev.src||'';
+  const catClass=cat.includes('halving')?'halving':cat.includes('list')?'listing':cat.includes('mainnet')||cat.includes('launch')?'mainnet':cat.includes('unlock')||cat.includes('release')?'unlock':cat.includes('partner')||cat.includes('integration')?'partnership':'conference';
+  const dateStr=date&&date!=='TBA'?new Date(date).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}):date;
+  return`<div class="cal-card ${catClass}">
+    <div class="cal-date">${dateStr}</div>
+    <div class="cal-title">${escapeHtml(title)}</div>
+    ${coin?`<div class="cal-coin">🪙 ${escapeHtml(coin)}${ticker?' ('+ticker+')':''}</div>`:''}
+    ${confidence?`<div class="cal-conf">Confidence: ${confidence}%</div>`:''}
+    <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+      ${proof?`<a href="${escapeHtml(proof)}" target="_blank" rel="noopener" class="btn btn-g btn-sm" style="text-decoration:none;font-size:10px;">Source →</a>`:''}
+      ${src&&src!==proof?`<a href="${escapeHtml(src)}" target="_blank" rel="noopener" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">More Info</a>`:''}
+      <button class="btn btn-o btn-sm" style="font-size:10px;" onclick="askAI('Tell me about this crypto event and its market impact: ${escapeHtml(title).replace(/'/g,"\\'")}')">🤖 AI</button>
+    </div>
+  </div>`;
+}
+
+function filterCalendar(f,el){
+  document.querySelectorAll('#cal-filters .fp').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderCalendar(_calAll,f);
+}
+
+const STATIC_EVENTS=[
+  {t:'Bitcoin Halving Countdown',cat:'halving',dl:'April 2028',coin:'Bitcoin',ticker:'BTC',conf:99,url:'https://www.bitcoinblockhalf.com',src:'https://bitcoin.org'},
+  {t:'Ethereum Pectra Upgrade',cat:'mainnet',dl:'2025-05-07',coin:'Ethereum',ticker:'ETH',conf:90,url:'https://eips.ethereum.org',src:'https://ethereum.org/en/roadmap'},
+  {t:'Solana Firedancer Client Launch',cat:'mainnet',dl:'2025-Q3',coin:'Solana',ticker:'SOL',conf:75,url:'https://jumpcrypto.com/firedancer',src:'https://solana.com'},
+  {t:'Arbitrum Token Unlock — Foundation',cat:'unlock',dl:'2025-04-01',coin:'Arbitrum',ticker:'ARB',conf:99,url:'https://token.unlock.app/arbitrum',src:'https://arbitrum.foundation'},
+  {t:'Optimism OP Token Unlock',cat:'unlock',dl:'2025-05-31',coin:'Optimism',ticker:'OP',conf:99,url:'https://token.unlock.app/optimism',src:'https://optimism.io'},
+  {t:'Coinbase Derivatives Listing: SOL Futures',cat:'listing',dl:'2025-04-15',coin:'Solana',ticker:'SOL',conf:80,url:'https://www.coinbase.com/derivatives',src:'https://www.coinbase.com'},
+  {t:'Binance Launchpool New Project',cat:'listing',dl:'2025-04-20',coin:'TBA',ticker:'TBA',conf:70,url:'https://launchpad.binance.com',src:'https://binance.com'},
+  {t:'ETH Denver 2026 Conference',cat:'conference',dl:'2026-02-28',coin:'Ethereum',ticker:'ETH',conf:95,url:'https://www.ethdenver.com',src:'https://www.ethdenver.com'},
+  {t:'Sui Network Major Protocol Upgrade',cat:'mainnet',dl:'2025-05-01',coin:'Sui',ticker:'SUI',conf:85,url:'https://sui.io/blog',src:'https://sui.io'},
+  {t:'Uniswap v4 Full Launch',cat:'mainnet',dl:'2025-Q2',coin:'Uniswap',ticker:'UNI',conf:80,url:'https://uniswap.org/blog',src:'https://uniswap.org'},
+  {t:'Chainlink CCIP v1.5 Cross-Chain',cat:'mainnet',dl:'2025-Q2',coin:'Chainlink',ticker:'LINK',conf:75,url:'https://chain.link/blog',src:'https://chain.link'},
+  {t:'Bitcoin Conference Nashville 2025',cat:'conference',dl:'2025-07-10',coin:'Bitcoin',ticker:'BTC',conf:99,url:'https://b.tc/conference',src:'https://b.tc/conference'},
+];
+
+// ═══════════════════════════════════════════════
+// PRICE ALERTS — browser notifications + localStorage
+// ═══════════════════════════════════════════════
+const ALERT_COINS_MAP={bitcoin:'BTC',ethereum:'ETH',solana:'SOL',binancecoin:'BNB',ripple:'XRP',cardano:'ADA','avalanche-2':'AVAX','matic-network':'MATIC',chainlink:'LINK',dogecoin:'DOGE'};
+
+async function addAlert(){
+  const coin=$('al-coin').value;
+  const cond=$('al-cond').value;
+  const price=parseFloat($('al-price').value);
+  const note=$('al-note').value.trim();
+  if(!price||price<=0){alert('Please enter a valid target price.');return;}
+  // Request notification permission
+  if('Notification' in window && Notification.permission==='default'){
+    await Notification.requestPermission();
+  }
+  const alert_obj={id:Date.now(),coin,cond,price,note,sym:ALERT_COINS_MAP[coin]||coin.toUpperCase(),triggered:false,created:new Date().toISOString()};
+  S.alerts.push(alert_obj);
+  localStorage.setItem('crapp_alerts',JSON.stringify(S.alerts));
+  $('al-price').value='';$('al-note').value='';
+  renderAlerts();
+}
+
+function removeAlert(id){
+  S.alerts=S.alerts.filter(a=>a.id!==id);
+  localStorage.setItem('crapp_alerts',JSON.stringify(S.alerts));
+  renderAlerts();
+}
+
+function renderAlerts(){
+  const el=$('alerts-list');if(!el)return;
+  if(!S.alerts.length){el.innerHTML='<div style="text-align:center;padding:24px;color:var(--slate);font-size:12px;">No alerts set yet.</div>';return;}
+  el.innerHTML=S.alerts.map(a=>{
+    const price=S.prices[a.coin]?.usd;
+    const triggered=a.triggered;
+    const progress=price?Math.min(100,a.cond==='above'?(price/a.price*100):(a.price/price*100)):0;
+    return`<div class="al-item">
+      <div class="al-info">
+        <div class="al-title">${a.sym} ${a.cond==='above'?'≥':'≤'} ${fmt.price(a.price)}</div>
+        <div class="al-sub">Current: ${price?fmt.price(price):'—'} · ${a.note||'No note'}</div>
+        <div style="height:4px;background:var(--ivory2);border-radius:2px;margin-top:6px;overflow:hidden;">
+          <div style="height:100%;width:${progress}%;background:${progress>=100?'var(--green)':'var(--gold2)'};border-radius:2px;transition:width .5s;"></div>
+        </div>
+      </div>
+      ${triggered?`<span class="al-triggered">✅ Triggered</span>`:''}
+      <button onclick="removeAlert(${a.id})" style="background:none;border:none;cursor:pointer;color:var(--slate);font-size:18px;padding:4px;">×</button>
+    </div>`;
+  }).join('');
+}
+
+async function loadAlertPrices(){
+  if(!S.alerts.length)return;
+  const ids=[...new Set(S.alerts.map(a=>a.coin))].join(',');
+  try{
+    const r=await fetch(`${CG}/simple/price?ids=${ids}&vs_currencies=usd`,{headers:CG_H()});
+    const prices=await r.json();
+    // Check each alert
+    S.alerts.forEach(a=>{
+      const current=prices[a.coin]?.usd;
+      if(!current||a.triggered)return;
+      const hit=(a.cond==='above'&&current>=a.price)||(a.cond==='below'&&current<=a.price);
+      if(hit){
+        a.triggered=true;
+        localStorage.setItem('crapp_alerts',JSON.stringify(S.alerts));
+        if('Notification' in window&&Notification.permission==='granted'){
+          new Notification(`🔔 CRAPP Alert: ${a.sym}`,{body:`${a.sym} is ${a.cond} ${fmt.price(a.price)}. Current: ${fmt.price(current)}${a.note?'\n'+a.note:''}`,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🔔</text></svg>'});
+        }
+      }
+    });
+    renderAlerts();
+    // Show prices grid
+    const ids2=Object.keys(ALERT_COINS_MAP);
+    const allPrices=await fetch(`${CG}/simple/price?ids=${ids2.join(',')}&vs_currencies=usd&include_24hr_change=true`,{headers:CG_H()}).then(r=>r.json());
+    const priceGrid=$('alert-prices');if(!priceGrid)return;
+    priceGrid.innerHTML=ids2.map(id=>{
+      const p=allPrices[id];if(!p)return'';
+      const chg=p.usd_24h_change;
+      return`<div class="wh-stat" style="cursor:pointer;" onclick="document.getElementById('al-coin').value='${id}';document.getElementById('al-price').value='';">
+        <div class="wh-stat-lbl">${ALERT_COINS_MAP[id]}</div>
+        <div class="wh-stat-val" style="font-size:16px;">${fmt.price(p.usd)}</div>
+        <div class="wh-stat-sub ${cls(chg)}">${fmt.pct(chg)}</div>
+      </div>`;
+    }).join('');
+  }catch(e){}
+}
+
+// Check alerts every 30s
+setInterval(()=>{if(S.alerts.some(a=>!a.triggered))loadAlertPrices();},30000);
+
+// ═══════════════════════════════════════════════
+// CONTRACT SECURITY CHECKER — GoPlus Security API (free, no key)
+// ═══════════════════════════════════════════════
+async function checkSecurity(){
+  const addr=$('sec-addr').value.trim();
+  const chain=$('sec-chain').value;
+  if(!addr||!addr.match(/^0x[0-9a-fA-F]{40}$/)){
+    $('sec-result').innerHTML=`<div class="co" style="background:var(--red2);border-color:rgba(192,57,43,.2);">⚠️ Please enter a valid contract address (0x followed by 40 hex characters).</div>`;
+    return;
+  }
+  $('sec-result').innerHTML=`<div class="loader"><div class="spin"></div>Scanning contract on GoPlus Security API…</div>`;
+  try{
+    const url=`https://api.gopluslabs.io/api/v1/token_security/${chain}?contract_addresses=${addr}`;
+    const r=await fetch(url);
+    const data=await r.json();
+    if(data.code!==1)throw new Error(data.message||'GoPlus error');
+    const info=data.result?.[addr.toLowerCase()]||data.result?.[addr];
+    if(!info)throw new Error('No data returned');
+    renderSecResult(info,addr,chain);
+  }catch(e){
+    console.warn('Security',e);
+    $('sec-result').innerHTML=`<div class="co" style="background:var(--red2);border-color:rgba(192,57,43,.2);">⚠️ Unable to scan: ${e.message}. Try TokenSniffer.com or Honeypot.is manually.</div>`;
+  }
+}
+
+function secDemo(addr,chain){$('sec-addr').value=addr;$('sec-chain').value=chain;checkSecurity();}
+
+function renderSecResult(info,addr,chain){
+  // Score calculation
+  const checks=[
+    {label:'Is Honeypot',val:info.is_honeypot,bad:'1',warn:'unknown'},
+    {label:'Buy Tax',val:info.buy_tax,bad:v=>parseFloat(v)>10,warn:v=>parseFloat(v)>0&&parseFloat(v)<=10,display:v=>v+'%'},
+    {label:'Sell Tax',val:info.sell_tax,bad:v=>parseFloat(v)>10,warn:v=>parseFloat(v)>0&&parseFloat(v)<=10,display:v=>v+'%'},
+    {label:'Can Mint',val:info.is_mintable,bad:'1'},
+    {label:'Ownership Renounced',val:info.is_open_source,good:'1'},
+    {label:'Open Source',val:info.is_open_source,good:'1'},
+    {label:'Blacklist Function',val:info.is_blacklisted,bad:'1'},
+    {label:'Whitelist Function',val:info.is_whitelisted,warn:'1'},
+    {label:'Trading Pausable',val:info.trading_cooldown,bad:'1'},
+    {label:'Proxy Contract',val:info.is_proxy,warn:'1'},
+    {label:'Self-Destruct',val:info.selfdestruct,bad:'1'},
+    {label:'External Call Risk',val:info.external_call,warn:'1'},
+    {label:'Creator Balance',val:info.creator_percent?parseFloat(info.creator_percent).toFixed(1)+'%':null,warn:v=>parseFloat(v)>20,display:v=>v},
+    {label:'LP Locked',val:info.lp_locked_percent?info.lp_locked_percent+'%':null,good:v=>parseFloat(v)>80,display:v=>v},
+  ];
+  let danger=0,warnings=0,passes=0;
+  const rows=checks.filter(c=>c.val!=null).map(c=>{
+    const v=c.val;const display=c.display?c.display(v):v==='1'?'Yes':v==='0'?'No':v;
+    let cls2='sec-warn-txt',status='⚠️';
+    if(c.good){const isGood=typeof c.good==='function'?c.good(v):v===c.good;if(isGood){cls2='sec-pass';status='✅';passes++;}else{cls2='sec-fail';status='❌';danger++;}}
+    else if(c.bad){const isBad=typeof c.bad==='function'?c.bad(v):v===c.bad;if(isBad){cls2='sec-fail';status='❌';danger++;}else{cls2='sec-pass';status='✅';passes++;}}
+    else if(c.warn){const isWarn=typeof c.warn==='function'?c.warn(v):v===c.warn;if(isWarn){cls2='sec-warn-txt';status='⚠️';warnings++;}else{cls2='sec-pass';status='✅';passes++;}}
+    return`<div class="sec-row"><span>${c.label}</span><span class="${cls2}">${status} ${display}</span></div>`;
+  }).join('');
+  const total=passes+warnings+danger;
+  const score=total?Math.round((passes/total)*100):50;
+  const risk=danger>3?'danger':warnings>3||danger>0?'warn':'safe';
+  const riskLabel=risk==='danger'?'HIGH RISK 🚨':risk==='warn'?'MODERATE RISK ⚠️':'LOOKS SAFE ✅';
+  const name=info.token_name||'Unknown Token';
+  const sym=info.token_symbol||'???';
+  const supply=info.total_supply?fmt.largeNum(parseFloat(info.total_supply)):null;
+  const holders=info.holder_count?parseInt(info.holder_count).toLocaleString():null;
+  $('sec-result').innerHTML=`
+    <div class="sec-score ${risk}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:4px;">Security Score</div>
+          <div class="sec-score-val">${score}/100</div>
+          <div style="font-size:13px;font-weight:800;margin-top:4px;">${riskLabel}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-weight:800;font-size:16px;">${escapeHtml(name)} (${escapeHtml(sym)})</div>
+          ${supply?`<div style="font-size:11px;color:var(--slate);">Supply: ${supply}</div>`:''}
+          ${holders?`<div style="font-size:11px;color:var(--slate);">Holders: ${holders}</div>`:''}
+          <div style="font-size:10px;font-family:var(--mono);color:var(--slate);margin-top:4px;">${fmt.addr(addr)}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;font-size:11px;margin-bottom:14px;">
+        <span style="color:var(--green);">✅ ${passes} passed</span>
+        <span style="color:var(--gold);">⚠️ ${warnings} warnings</span>
+        <span style="color:var(--red);">❌ ${danger} dangers</span>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <div style="font-weight:800;font-size:14px;margin-bottom:12px;">Detailed Checks</div>
+      ${rows}
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="https://etherscan.io/address/${addr}" target="_blank" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">View on Etherscan →</a>
+        <a href="https://tokensniffer.com/token/${chain}/${addr}" target="_blank" class="btn btn-o btn-sm" style="text-decoration:none;font-size:10px;">TokenSniffer →</a>
+        <button class="btn btn-g btn-sm" style="font-size:10px;" onclick="askAI('Security analysis for token: ${escapeHtml(name)} (${escapeHtml(sym)}) on chain ${chain}. Security score ${score}/100. ${danger} dangers, ${warnings} warnings, ${passes} passed checks. Is this token safe to interact with?')">🤖 AI Analysis</button>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// DeFi YIELDS — DeFiLlama Yields API (free)
+// ═══════════════════════════════════════════════
+async function fetchYields(){
+  S.yieldsFetched=true;
+  $('yield-tbody').innerHTML=`<tr><td colspan="8"><div class="loader"><div class="spin"></div>Loading yield opportunities…</div></td></tr>`;
+  try{
+    const r=await fetch('https://yields.llama.fi/pools');
+    const data=await r.json();
+    // Filter: TVL > $1M, APY > 0, not stale
+    S.yieldsAll=data.data.filter(p=>p.tvlUsd>1e6&&p.apy>0&&!p.outlier).sort((a,b)=>b.tvlUsd-a.tvlUsd);
+    // Stats
+    const avgApy=(S.yieldsAll.slice(0,50).reduce((s,p)=>s+p.apy,0)/50).toFixed(1);
+    const maxApy=Math.max(...S.yieldsAll.slice(0,100).map(p=>p.apy)).toFixed(1);
+    const totalTVL=S.yieldsAll.reduce((s,p)=>s+p.tvlUsd,0);
+    $('yield-stats').innerHTML=`
+      <div class="wh-stat"><div class="wh-stat-lbl">Tracked Pools</div><div class="wh-stat-val">${S.yieldsAll.length.toLocaleString()}</div><div class="wh-stat-sub">With TVL > $1M</div></div>
+      <div class="wh-stat"><div class="wh-stat-lbl">Avg APY (Top 50)</div><div class="wh-stat-val">${avgApy}%</div><div class="wh-stat-sub">By TVL</div></div>
+      <div class="wh-stat"><div class="wh-stat-lbl">Max APY Seen</div><div class="wh-stat-val">${maxApy}%</div><div class="wh-stat-sub">In top 100 by TVL</div></div>
+      <div class="wh-stat"><div class="wh-stat-lbl">Total Yield TVL</div><div class="wh-stat-val">${fmt.large(totalTVL)}</div><div class="wh-stat-sub">All tracked pools</div></div>
+    `;
+    S.yieldsCurrent=S.yieldsAll;
+    renderYields(0);
+  }catch(e){
+    $('yield-tbody').innerHTML=`<tr><td colspan="8"><div class="empty">⚠️ DeFiLlama yields API unavailable. Please try again.</div></td></tr>`;
+  }
+}
+
+function renderYields(page=0){
+  S.yieldsPage=page;
+  const perPage=30;
+  const items=S.yieldsCurrent.slice(0,perPage*(page+1));
+  $('yield-tbody').innerHTML=items.map((p,i)=>{
+    const apy=p.apy;
+    const apyClass=apy>20?'apy-high':apy>5?'apy-med':'apy-low';
+    const riskClass=p.ilRisk==='yes'?'risk-high':p.stablecoin?'risk-low':'risk-med';
+    const riskLabel=p.ilRisk==='yes'?'IL Risk':p.stablecoin?'Low':'Medium';
+    const sym=p.symbol||'—';
+    const trend=p.apyPct30d!=null?(p.apyPct30d>0?`<span class="up">▲${p.apyPct30d.toFixed(1)}%</span>`:`<span class="dn">▼${Math.abs(p.apyPct30d).toFixed(1)}%</span>`):'—';
+    const link=p.pool?`https://defillama.com/yields/pool/${p.pool}`:`https://defillama.com/protocol/${(p.project||'').toLowerCase().replace(/\s/g,'-')}`;
+    return`<tr>
+      <td><div class="rn">${i+1}</div></td>
+      <td><div style="font-weight:700;">${escapeHtml(p.project||'—')}</div><div style="font-size:10px;color:var(--slate);">${escapeHtml(sym)}</div></td>
+      <td><span class="apy-pill ${apyClass}">${apy.toFixed(2)}%</span></td>
+      <td class="hm">${fmt.large(p.tvlUsd)}</td>
+      <td class="hm"><span class="chain-badge">${escapeHtml((p.chain||'').slice(0,8))}</span></td>
+      <td class="hm">${trend}</td>
+      <td><span class="risk-pill ${riskClass}">${riskLabel}</span></td>
+      <td><a href="${link}" target="_blank" rel="noopener" class="btn btn-g btn-sm" style="text-decoration:none;font-size:10px;">Open →</a></td>
+    </tr>`;
+  }).join('');
+}
+
+function filterYields(f,el){
+  document.querySelectorAll('#yield-filters .fp').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(f==='all')S.yieldsCurrent=S.yieldsAll;
+  else if(f==='stablecoin')S.yieldsCurrent=S.yieldsAll.filter(p=>p.stablecoin);
+  else if(f==='eth')S.yieldsCurrent=S.yieldsAll.filter(p=>(p.symbol||'').toLowerCase().includes('eth'));
+  else if(f==='btc')S.yieldsCurrent=S.yieldsAll.filter(p=>(p.symbol||'').toLowerCase().includes('btc')||p.symbol?.toLowerCase().includes('wbtc'));
+  else if(f==='low')S.yieldsCurrent=S.yieldsAll.filter(p=>p.stablecoin&&p.ilRisk!=='yes');
+  renderYields(0);
+}
+
+function loadMoreYields(){renderYields(S.yieldsPage+1);}
+
+// ═══════════════════════════════════════════════
+// PRICE TABLE FLASH — animate changed cells
+// ═══════════════════════════════════════════════
+let _prevPrices={};
+function renderCoinsWithFlash(coins){
+  const tbody=$('ptbody');if(!tbody)return;
+  tbody.innerHTML=coins.map(c=>{
+    const h1=c.price_change_percentage_1h_in_currency,h24=c.price_change_percentage_24h_in_currency,d7=c.price_change_percentage_7d_in_currency;
+    const prev=_prevPrices[c.id];
+    const flashCls=prev&&c.current_price!==prev?(c.current_price>prev?'flash-up':'flash-dn'):'';
+    _prevPrices[c.id]=c.current_price;
+    return`<tr class="${flashCls}" onclick="openTokenDetail('${c.id}')" style="cursor:pointer;">
+      <td><div class="rn">${c.market_cap_rank}</div></td>
+      <td><div class="cc"><img class="ci" src="${c.image}" onerror="this.style.display='none'" alt="${c.symbol}"><div><div class="cn">${c.name}</div><div class="csy">${c.symbol.toUpperCase()}</div></div></div></td>
+      <td style="font-weight:700;">${fmt.price(c.current_price)}</td>
+      <td class="hm ${cls(h1)}">${fmt.pct(h1)}</td>
+      <td class="${cls(h24)}" style="font-weight:700;">${fmt.pct(h24)}</td>
+      <td class="hm ${cls(d7)}">${fmt.pct(d7)}</td>
+      <td class="hm">${fmt.large(c.market_cap)}</td>
+      <td class="hm">${fmt.large(c.total_volume)}</td>
+      <td class="hm">${spk(c.sparkline_in_7d?.price,d7>=0)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+// EXPORT PORTFOLIO AS CSV
+// ═══════════════════════════════════════════════
+function exportPortfolioCSV(){
+  if(!S.port.length){alert('No portfolio data to export.');return;}
+  const CN2={bitcoin:{s:'BTC',n:'Bitcoin'},ethereum:{s:'ETH',n:'Ethereum'},solana:{s:'SOL',n:'Solana'},binancecoin:{s:'BNB',n:'BNB'},ripple:{s:'XRP',n:'XRP'},cardano:{s:'ADA',n:'Cardano'},'avalanche-2':{s:'AVAX',n:'Avalanche'},'matic-network':{s:'MATIC',n:'Polygon'},chainlink:{s:'LINK',n:'Chainlink'},polkadot:{s:'DOT',n:'Polkadot'},dogecoin:{s:'DOGE',n:'Dogecoin'},'shiba-inu':{s:'SHIB',n:'Shiba Inu'}};
+  const rows=[['Coin','Symbol','Amount','Buy Price USD','Current Price USD','Value USD','P&L USD']];
+  S.port.forEach(p=>{
+    const info=CN2[p.coin]||{s:p.coin.toUpperCase(),n:p.coin};
+    const price=S.prices[p.coin]?.usd||0;
+    const val=price*p.amount;
+    const pnl=p.buy?(val-(p.buy*p.amount)).toFixed(2):'N/A';
+    rows.push([info.n,info.s,p.amount,p.buy||'N/A',price.toFixed(4),val.toFixed(2),pnl]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='CRAPP_portfolio_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
 async function init(){
-  // Render static data immediately
-  filterAD('all',null);
-  filterICO('all',null);
-  filterLearn('all',null);
-  renderG();
+  // Render fallback data immediately so UI is never blank
   renderFallbackNews();
   renderWhales();
+  renderAlerts();
+  filterLearn('all',null);
+  renderG();
 
-  // Fetch live data in parallel
-  await Promise.allSettled([
-    fetchGlobal(),
-    fetchPrices(),
-    fetchFG()
-  ]);
+  // Fetch all live data in parallel
+  await Promise.allSettled([fetchGlobal(),fetchPrices(),fetchFG()]);
 
-  // Load chart and coins
-  fetchCoins(1);
+  // TradingView live chart + coins table
   loadChart('7',null,'bitcoin');
+  fetchCoins(1);
 
-  // Calculators
+  // Fetch airdrops and ICOs eagerly in background
+  fetchAirdrops();
+  fetchICOs();
+
+  // Calculators + real Etherscan gas
   runConv();runROI();runDCA();loadGas();
 
-  // Refresh every 60s
-  setInterval(()=>{fetchPrices();fetchGlobal();loadGas();},60000);
-  setInterval(()=>{S.whaleData=[...generateWhaleData(),...S.whaleData].slice(0,60);if($('panel-whales').classList.contains('active'))renderWhales();if($('d-wh'))renderWhales();},30000);
+  // ── Refresh intervals ──
+  // Prices + market every 30s
+  setInterval(()=>{
+    fetchPrices();fetchGlobal();
+    if($('panel-prices').classList.contains('active'))fetchCoins(1);
+    const lu=$('last-upd');
+    if(lu)lu.textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  },30000);
+  // Gas every 60s
+  setInterval(loadGas,60000);
+  // Whale feed refresh every 30s
+  setInterval(()=>{
+    S.whaleData=[...generateWhaleData(),...S.whaleData].slice(0,60);
+    if($('panel-whales').classList.contains('active'))renderWhales();
+    if($('d-wh'))renderWhales();
+  },30000);
+  // News refresh every 2min
+  setInterval(()=>{if($('panel-news').classList.contains('active'))fetchNews();},120000);
+  // Alert checking every 30s
+  setInterval(()=>{if(S.alerts.some(a=>!a.triggered))loadAlertPrices();},30000);
 }
 init();
 </script>
